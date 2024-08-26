@@ -1,16 +1,20 @@
 const asyncHandler = require("express-async-handler")
-const todoSchema = require("../model/Todo")
+const Todo = require("../model/Todo")
 
 
 exports.createTodo = asyncHandler(async () => {
-    res.json = ({message: "todo fetch success"})
+    await Todo.create(req.body)
+    res.json({ message: "createTodo Success" })
 })
 exports.readTodo = asyncHandler(async () => {
-    res.json = ({message: "todo add success"})
+    const result = await Todo.find()
+    res.json({ message: "readTodo Success", result })
 })
 exports.updateTodo = asyncHandler(async () => {
-    res.json = ({message: "todo update  success"})
+    await Todo.findByIdAndUpdate(req.params.id, req.body)
+    res.json({ message: "updateTodo Success" })
 })
 exports.deleteTodo = asyncHandler(async () => {
-    res.json = ({message: "todo delete success"})
+    await Todo.findByIdAndDelete(req.params.id)
+    res.json({ message: "deleteTodo Success" })
 })
